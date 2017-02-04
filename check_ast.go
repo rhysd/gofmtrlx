@@ -1,3 +1,8 @@
+// Copyright 2017 rhysd <lin90162@yahoo.co.jp>
+//
+// This file is not a part of gofmt.
+// https://github.com/rhysd/gofmtrlx
+
 package main
 
 import (
