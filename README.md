@@ -27,6 +27,14 @@ Actually, Go's parser can parse this without bad AST node. So gofmt can format t
 
 gofmtrlx ignores syntax error if there is no bad node in AST.
 
+## Installation and usage
+
+```
+go get -u github.com/rhysd/gofmtrlx
+```
+
+Usage is the same as `gofmt` command.
+
 ## License
 
 All codes are licensed the same license as original gofmt.
