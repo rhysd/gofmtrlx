@@ -1,5 +1,5 @@
-gofmtrlx
-========
+gofmtrlx: Relaxed gofmt
+=======================
 
 This is a fork of [gofmt](https://golang.org/cmd/gofmt/).
 
@@ -25,7 +25,8 @@ This code can't be formatted because there is no trailing comma at line 6.
 
 Actually, Go's parser can parse this without bad AST node. So gofmt can format the code with fixing syntax error.
 
-gofmtrlx ignores syntax error if there is no bad node in AST.
+gofmtrlx ignores syntax error if there is no bad node in AST. In above code, gofmtrlx can fill up trailing comma
+on formatting it.
 
 ## Installation and usage
 

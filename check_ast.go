@@ -35,7 +35,6 @@ func checkBadAST(f *ast.File, originalError error) error {
 	ast.Walk(v, f)
 	if v.reason != "" {
 		return errors.Wrapf(originalError, "Cannot format code because of bad node: %s", v.reason)
-		return originalError
 	}
 	return nil
 }
