@@ -94,8 +94,12 @@ func processFile(filename string, in io.Reader, out io.Writer, stdin bool) error
 	}
 
 	file, sourceAdj, indentAdj, err := parse(fileSet, filename, src, stdin)
-	if err != nil {
-		return err
+	for err != nil {
+		src, err = fix(src, err)
+		if err != nil {
+			return err
+		}
+		file, sourceAdj, indentAdj, err = parse(fileSet, filename, src, stdin)
 	}
 
 	if rewrite != nil {
