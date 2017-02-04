@@ -10,22 +10,11 @@ type badNodeDetector struct {
 }
 
 func (v *badNodeDetector) Visit(node ast.Node) ast.Visitor {
-	_, ok := node.(*ast.BadExpr)
-	if ok {
+	switch node.(type) {
+	case *ast.BadExpr, *ast.BadStmt, *ast.BadDecl:
 		v.found = node
 		return nil
 	}
-	_, ok = node.(*ast.BadStmt)
-	if ok {
-		v.found = node
-		return nil
-	}
-	_, ok = node.(*ast.BadDecl)
-	if ok {
-		v.found = node
-		return nil
-	}
-
 	return v
 }
 
