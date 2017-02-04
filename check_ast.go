@@ -2,27 +2,34 @@ package main
 
 import (
 	"fmt"
+	"github.com/pkg/errors"
 	"go/ast"
 )
 
 type badNodeDetector struct {
-	found ast.Node
+	reason string
 }
 
 func (v *badNodeDetector) Visit(node ast.Node) ast.Visitor {
 	switch node.(type) {
-	case *ast.BadExpr, *ast.BadStmt, *ast.BadDecl:
-		v.found = node
+	case *ast.BadExpr:
+		v.reason = fmt.Sprintf("Bad expression around offset %d", node.Pos())
+		return nil
+	case *ast.BadStmt:
+		v.reason = fmt.Sprintf("Bad statement around offset %d", node.Pos())
+		return nil
+	case *ast.BadDecl:
+		v.reason = fmt.Sprintf("Bad declaration around offset %d", node.Pos())
 		return nil
 	}
 	return v
 }
 
 func checkBadAST(f *ast.File, originalError error) error {
-	v := &badNodeDetector{nil}
+	v := &badNodeDetector{""}
 	ast.Walk(v, f)
-	if v.found != nil {
-		fmt.Printf("%v", v.found)
+	if v.reason != "" {
+		return errors.Wrapf(originalError, "Cannot format code because of bad node: %s", v.reason)
 		return originalError
 	}
 	return nil
