@@ -9,6 +9,8 @@ import (
 	"fmt"
 	"github.com/pkg/errors"
 	"go/ast"
+	"go/scanner"
+	"os"
 )
 
 type badNodeDetector struct {
@@ -36,5 +38,6 @@ func checkBadAST(f *ast.File, originalError error) error {
 	if v.reason != "" {
 		return errors.Wrapf(originalError, "Cannot format code because of bad node: %s", v.reason)
 	}
+	scanner.PrintError(os.Stderr, originalError)
 	return nil
 }
