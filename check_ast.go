@@ -11,6 +11,7 @@ import (
 	"go/ast"
 	"go/scanner"
 	"os"
+	"strings"
 )
 
 type badNodeDetector struct {
@@ -33,11 +34,16 @@ func (v *badNodeDetector) Visit(node ast.Node) ast.Visitor {
 }
 
 func checkBadAST(f *ast.File, originalError error) error {
+	if !strings.Contains(originalError.Error(), "missing ',' before newline") {
+		return originalError
+	}
+
 	v := &badNodeDetector{""}
 	ast.Walk(v, f)
 	if v.reason != "" {
 		return errors.Wrapf(originalError, "Cannot format code because of bad node: %s", v.reason)
 	}
+
 	scanner.PrintError(os.Stderr, originalError)
 	return nil
 }
