@@ -32,7 +32,9 @@ func parse(fset *token.FileSet, filename string, src []byte, fragmentOk bool) (
 	// package line and source fragments are ok, fall through to
 	// try as a source fragment. Stop and return on any other error.
 	if err == nil || !fragmentOk || !strings.Contains(err.Error(), "expected 'package'") {
-		err = checkBadAST(file, err)
+		if err != nil {
+			err = checkBadAST(file, err)
+		}
 		return
 	}
 
