@@ -69,7 +69,9 @@ func parse(fset *token.FileSet, filename string, src []byte, fragmentOk bool) (
 	// to make sure comments are flushed before the '}'.
 	fsrc := append(append([]byte("package p; func _() {"), src...), '\n', '\n', '}')
 	file, err = parser.ParseFile(fset, filename, fsrc, parserMode)
-	err = checkBadAST(file, err)
+	if err != nil {
+		err = checkBadAST(file, err)
+	}
 	if err == nil {
 		sourceAdj = func(src []byte, indent int) []byte {
 			// Cap adjusted indent to zero.
