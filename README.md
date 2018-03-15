@@ -3,6 +3,8 @@ gofmtrlx: Relaxed gofmt
 
 This is a fork of [gofmt](https://golang.org/cmd/gofmt/).
 
+This project is being rebased continuously on original `gofmt` (as long as I'm using `gofmtrlx`).
+
 ## What is a problem?
 
 gofmt can't format a code which contains syntax error. For example,
